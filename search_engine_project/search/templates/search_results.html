@@ -1,0 +1,47 @@
+<!-- search_results.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{% static 'mystatic.css' %}">
+  <title>Documentation Search Results</title>
+</head>
+<body>
+  <h1>Search Results</h1>
+  <form action="{% url 'search2' %}" method=POST >
+    <input id='myInput' type="text" name="searched" value="{{searched}}" />
+    {% csrf_token %}
+    <br>
+    <br>
+    <br>
+    <button id="myBtn" type="submit" onclick="document.location.href='search2'">Search</button>
+    <script>
+      var input = document.getElementById('myInput')
+      
+      // Execute a function when the user presses a key on the keyboard
+      input.addEventListener('keypress', function (event) {
+        // If the user presses the "Enter" key on the keyboard
+        if (event.key === 'Enter') {
+          // Cancel the default action, if needed
+          event.preventDefault()
+          // Trigger the button element with a click
+          document.getElementById('myBtn').click()
+        }
+      })
+    </script>
+    <ul>
+      {% for document in results %}
+        <h2>{{document.id}}. {{document.title}} 
+          <input type="checkbox" id="myCheck" value="{{document.id}}" name="Drel" >
+        </h2>
+        <cite><a href="{{document.url}}">{{document.url}}</a></cite>
+        <p>{{document.content|truncatewords:30}}</p>
+      {% empty %}
+        <li>No documents found.</li>
+      {% endfor %}    
+      </ul>
+  </form>  
+
+</body>
+</html>

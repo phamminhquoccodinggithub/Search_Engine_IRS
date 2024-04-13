@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="{% static 'mystatic.css' %}" />
+    <title>Search Engine</title>
+  </head>
+  <body>
+    <h1>Search Engine Website</h1>
+    <br />
+    <form action="{% url 'search' %}" method=POST >
+      <input id='myInput' type="text" name="searched" placeholder="Search.." />
+      {% csrf_token %}
+      <br>
+      <br>
+      <br>
+      <button id="myBtn" type="submit" onclick="document.location.href='search'">Search</button>
+      <script>
+        var input = document.getElementById('myInput')
+        
+        // Execute a function when the user presses a key on the keyboard
+        input.addEventListener('keypress', function (event) {
+          // If the user presses the "Enter" key on the keyboard
+          if (event.key === 'Enter') {
+            // Cancel the default action, if needed
+            event.preventDefault()
+            // Trigger the button element with a click
+            document.getElementById('myBtn').click()
+          }
+        })
+      </script>
+    </form>  
+  </body>
+</html>
